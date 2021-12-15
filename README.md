@@ -4,28 +4,30 @@
 
 ### Requirements
 
-# [ ] Python 3.x
+- [ ] Python 3.x
 
-# [ ] Git
+- [ ] Git
 
-# [ ] Internet connection (for API access)
+- [ ] Internet connection (for API access)
 
 On Linux/Mac run:
-´´´
+
+```
 python3 -m venv venv
 
 source venv/bin/activate
 
 python3 -m pip install -r requirements.txt
-´´´
+```
+
 to install all requirements
 
 On Windows run:
 
-´´´
+```
 python3 -m venv venv
 
 venv\Scripts\activate.bat
 
 python3 -m pip install -r requirements.txt
-´´´
+```

@@ -10,9 +10,7 @@
 
 - [ ] Internet connection (for API access and CDN access)
 
-### Linux only
-
-- [ ] gpp-5 for installing `pyodbc`
+- [ ] VPN Connection to HS VPN
 
 On Linux/Mac run:
 

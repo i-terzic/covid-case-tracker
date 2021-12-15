@@ -8,7 +8,11 @@
 
 - [ ] Git
 
-- [ ] Internet connection (for API access)
+- [ ] Internet connection (for API access and cdn access)
+
+### Linux only
+
+- [ ] gpp-5 for installing `pyodbc`
 
 On Linux/Mac run:
 

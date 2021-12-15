@@ -20,8 +20,6 @@ source venv/bin/activate
 python3 -m pip install -r requirements.txt
 ```
 
-to install all requirements
-
 On Windows run:
 
 ```
@@ -31,3 +29,5 @@ venv\Scripts\activate.bat
 
 python3 -m pip install -r requirements.txt
 ```
+
+to create a virtual environment and install all requirements

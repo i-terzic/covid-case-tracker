@@ -1,7 +1,10 @@
 import os
 
+import pymssql
 import requests
-from flask import Blueprint, redirect, render_template
+from flask import Blueprint, jsonify, redirect, render_template
+
+from .database import DB_CONFIG, DatabaseConnection
 
 views = Blueprint(name="views", import_name=__name__)
 
@@ -9,15 +12,11 @@ views = Blueprint(name="views", import_name=__name__)
 @views.route('/')
 @views.route('/home')
 def home() -> 'render_template':
+    """render the home template"""
     return render_template('index.html', name='Ivan', title='Home')
 
 
 @views.route('/newcase')
 def new_case() -> 'render_template':
+    """render the new case template"""
     return render_template('new_case.html')
-
-
-@views.route('/500')
-def test_500() -> 'render_template':
-    meme_path = os.path.join('static', '500.png')
-    return render_template('500.html', meme_path=meme_path)

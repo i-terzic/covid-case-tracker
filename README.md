@@ -8,7 +8,7 @@
 
 - [ ] Git
 
-- [ ] Internet connection (for API access and cdn access)
+- [ ] Internet connection (for API access and CDN access)
 
 ### Linux only
 
@@ -34,4 +34,4 @@ venv\Scripts\activate.bat
 python3 -m pip install -r requirements.txt
 ```
 
-to create a virtual environment and install all requirements
+to create a virtual environment and install all requirements.

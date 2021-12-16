@@ -4,6 +4,7 @@ import os
 import requests
 from flask import Flask, render_template
 
+from .case import case
 from .views import views
 
 
@@ -12,6 +13,7 @@ def create_app() -> 'Flask':
     app = Flask(__name__)
 
     app.register_blueprint(views)
+    app.register_blueprint(case, url_prefix='/case')
 
     @app.errorhandler(404)
     def page_not_found(e) -> 'render_template':

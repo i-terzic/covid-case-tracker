@@ -12,7 +12,9 @@ load_dotenv(dotenv_path=env_path)
 
 
 class DatabaseConnection():
-    def __init__(self, **config: dict) -> None:
+    """Context Manager for mssql db connection"""
+
+    def __init__(self) -> None:
         """get db connection config"""
         self.DB_NAME = os.getenv('DB_NAME')
         self.DB_HOST = os.getenv('DB_HOST')

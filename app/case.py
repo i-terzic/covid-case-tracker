@@ -17,7 +17,8 @@ def open_case() -> 'render_template':
     if request.method == 'POST':  # TODO end post request with redirect
         pass
     if request.method == 'GET':
-        return render_template('open_case.html', title='Open Cases')
+        cases = [str(x) + ' open case' for x in range(10)]
+        return render_template('open_case.html', title='Open Cases', cases=cases)
 
 
 @case.route('/closed')
@@ -25,4 +26,5 @@ def closed_case() -> 'render_template':
     if request.method == 'POST':  # TODO end post request with redirect
         pass
     if request.method == 'GET':
-        return render_template('closed_case.html', title='Closed Cases')
+        cases = [str(x) + ' closed case' for x in range(10)]
+        return render_template('closed_case.html', title='Closed Cases', cases=cases)

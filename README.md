@@ -45,12 +45,12 @@ to create a virtual environment and install all requirements.
 - Test:
   - PK: id (int)
   - FK: Person.id (int)
-  - Art (char(64) ggf. m. Domäne)
-  - Ergebnis (char(64) ggf. m Donäne)
+  - Art (char(64))
+  - Ergebnis (char(64))
   - Datum (date)
 - Covid-Fall:
   - PK: id (int)
   - FK: person.id (int)
-  - Testergebnis (char(64) ggf. m. Domäne)
-  - Testdatum (date)
-  - Quarantänedatum (date)
+  - FK: test.id (int)
+  - Quarantäne-Start (date)
+  - Quarantäne-Ende (date)

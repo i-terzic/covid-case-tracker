@@ -1,4 +1,8 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, redirect, render_template, request
+from flask.helpers import url_for
+from flask.typing import StatusCode
+
+from .database import DatabaseConnection
 
 case = Blueprint('case', __name__)
 
@@ -17,8 +21,17 @@ def open_case() -> 'render_template':
     if request.method == 'POST':  # TODO end post request with redirect
         pass
     if request.method == 'GET':
-        cases = [str(x) + ' open case' for x in range(10)]
-        return render_template('open_case.html', title='Open Cases', cases=cases)
+        try:
+            with DatabaseConnection() as cur:
+                cur.execute(
+                    "SELECT * FROM terzic_case WHERE status = 'open';")
+                data = []
+                for line in cur:
+                    case = dict(line)
+                    data.append(case)
+        except Exception as err:
+            return render_template('500.html'), 500
+        return render_template('open_case.html', title='Open Cases', cases=data)
 
 
 @case.route('/closed')
@@ -26,5 +39,15 @@ def closed_case() -> 'render_template':
     if request.method == 'POST':  # TODO end post request with redirect
         pass
     if request.method == 'GET':
-        cases = [str(x) + ' closed case' for x in range(10)]
-        return render_template('closed_case.html', title='Closed Cases', cases=cases)
+        try:
+            with DatabaseConnection() as cur:
+                cur.execute(
+                    "SELECT * FROM terzic_case WHERE status = 'closed';"
+                )
+                data = []
+                for line in cur:
+                    case = dict(line)
+                    data.append(case)
+        except Exception as err:
+            return render_template('500.html', 500)
+        return render_template('closed_case.html', title='Closed Cases', cases=data)

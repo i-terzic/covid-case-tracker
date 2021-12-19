@@ -2,10 +2,9 @@ import json
 import os
 from pathlib import Path
 
-import requests
 from dotenv import load_dotenv
 from flask import Flask, render_template
-from werkzeug.exceptions import BadRequest, InternalServerError
+from werkzeug.exceptions import InternalServerError, NotFound
 
 from . import error_handler
 from .case import case
@@ -23,7 +22,7 @@ def create_app() -> 'Flask':
     load_dotenv(dotenv_path=env_path)
     app.secret_key = os.getenv('SECRET_KEY')
 
-    app.register_error_handler(BadRequest, error_handler.page_not_found)
+    app.register_error_handler(NotFound, error_handler.page_not_found)
     app.register_error_handler(
         InternalServerError, error_handler.internal_server_error)
     app.register_blueprint(views)

@@ -10,7 +10,7 @@
 
 - [ ] Internet connection (for API access and CDN access)
 
-- [ ] VPN Connection to HS VPN
+- [ ] VPN Connection to HS VPN (otherwise the application doesn't work properly)
 
 On Linux/Mac run:
 

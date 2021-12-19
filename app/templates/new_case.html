@@ -1,61 +1,72 @@
 {% extends 'base.html' %}
 
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/new_case.css')}}">
+{% endblock css %}
+
 {% block content %}
 <h1>New case</h1>
 <br>
 
 <form method="POST">
-  <div class="row">
-    <div class="col-4">
-      <h5>Personal Data</h5>
-      <div class="mb-3">
-        <label for="last-name" class="form-label">Last Name</label>
-        <input type="text" class="form-control" id="last-name" placeholder="Last Name" required>
+  <div>
+    <div class="row">
+      <div class="col-4">
+        <h5>Personal Data</h5>
+        <div class="mb-3">
+          <label for="last-name" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="last-name" placeholder="Last Name" required>
+        </div>
+        <div class="mb-3">
+          <label for="first-name" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="first-name" placeholder="First Name" required>
+        </div>
+        <div class="mb-3">
+          <label for="birth-date" class="form-label">Birth date</label>
+          <input type="date" class="form-control" id="birth-date" required>
+        </div>
+        <div class="mb-6">
+          <label for="address" class="form-label">Address</label>
+          <textarea class="form-control" id="address" rows="3" required></textarea>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="first-name" class="form-label">First Name</label>
-        <input type="text" class="form-control" id="first-name" placeholder="First Name" required>
+      <div class="col-4">
+        <h5>Test Result</h5>
+        <div class="mb-3">
+          <label for="test-type" class="form-label">Test Type</label>
+          <input type="text" class="form-control" id="test-type" placeholder="Covid-19" disabled>
+        </div>
+        <div class="mb-3">
+          <label for="test-date" class="form-label">Test Date</label>
+          <input type="date" class="form-control" id="test-date" required>
+        </div>
+        <div class="mb-3">
+          <label for="test-result" class="form-label">Test Result</label>
+          <select class="form-select" id="test-result" aria-label="Select Test Result" required>
+            <option disabled selected>Select Test Result</option>
+            <option value="positiv">Positive</option>
+            <option value="negativ">Negative</option>
+          </select>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="birth-date" class="form-label">Birth date</label>
-        <input type="date" class="form-control" id="birth-date" required>
-      </div>
-      <div class="mb-6">
-        <label for="address" class="form-label">Address</label>
-        <textarea class="form-control" id="address" rows="3" required></textarea>
+      <div class="col-4">
+        <h5>Quaranteen</h5>
+        <div class="mb-3">
+          <label for="quaranteen-start-date" class="form-label">Start Date</label>
+          <input type="date" class="form-control" id="quaranteen-start-date">
+        </div>
+        <div class="mb-3">
+          <label for="quaranteen-end-date" class="form-label">End Date</label>
+          <input type="date" class="form-control" id="quaranteen-end-date">
+        </div>
       </div>
     </div>
-    <div class="col-4">
-      <h5>Test Result</h5>
-      <div class="mb-3">
-        <label for="test-type" class="form-label">Test Type</label>
-        <input type="text" class="form-control" id="test-type" placeholder="Covid-19" disabled>
-      </div>
-      <div class="mb-3">
-        <label for="test-date" class="form-label">Test Date</label>
-        <input type="date" class="form-control" id="test-date" required>
-      </div>
-      <div class="mb-3">
-        <label for="test-result" class="form-label">Test Result</label>
-        <select class="form-select" id="test-result" aria-label="Select Test Result" required>
-          <option disabled selected>Select Test Result</option>
-          <option value="positiv">Positive</option>
-          <option value="negativ">Negative</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-4">
-      <h5>Quaranteen</h5>
-      <div class="mb-3">
-        <label for="quaranteen-start-date" class="form-label">Start Date</label>
-        <input type="date" class="form-control" id="quaranteen-start-date">
-      </div>
-      <div class="mb-3">
-        <label for="quaranteen-end-date" class="form-label">End Date</label>
-        <input type="date" class="form-control" id="quaranteen-end-date">
-      </div>
+    <div class="mb-3 d-flex float-end">
+      <input type="submit" class="btn btn-outline-dark ">
     </div>
   </div>
 </form>
-<script type="text/javascript" src="{{url_for('static', filename='js/new_case.js')}}"></script>
 {% endblock content %}
+{% block script %}
+<script type="text/javascript" src="{{url_for('static', filename='js/new_case.js')}}"></script>
+{% endblock script %}

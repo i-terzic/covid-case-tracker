@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request
+from flask import Blueprint, flash, redirect, render_template, request
 from flask.helpers import url_for
 from flask.typing import StatusCode
 from werkzeug.exceptions import InternalServerError
@@ -8,11 +8,12 @@ from .database import DatabaseConnection
 case = Blueprint('case', __name__)
 
 
-@case.route('/new')
+@case.route('/new', methods=['GET', 'POST'])
 def new_case() -> 'render_template':
     """render the new case template"""
     if request.method == 'POST':  # TODO
-        pass
+        flash('Successfully submited new Case', category='success')
+        return render_template('new_case.html', title='New Case')
     if request.method == 'GET':
         return render_template('new_case.html', title='New Case')
 

@@ -25,7 +25,7 @@ class DatabaseConnection():
         """return a cursor"""
         try:
             self.conn = pymssql.connect(
-                server=self.DB_HOST, user=self.DB_USER, password=self.DB_PWRD, database=self.DB_NAME)
+                server=self.DB_HOST, user=self.DB_USER, password=self.DB_PWRD, database=self.DB_NAME, timeout=3)
             self.cur = self.conn.cursor(as_dict=True)
             return self.cur
         except RuntimeError as err:
@@ -36,3 +36,12 @@ class DatabaseConnection():
         self.conn.commit()
         self.cur.close()
         self.conn.close()
+
+
+async def get_data(query: str) -> dict:
+    with DatabaseConnection() as cur:
+        cur.execuete(query)
+        data = []
+        for line in cur:
+            data.append(dict(line))
+        return data

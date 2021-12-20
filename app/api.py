@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from flask_cors import cross_origin
 from werkzeug.exceptions import InternalServerError
 
 from .database import DatabaseConnection
@@ -7,6 +8,7 @@ api = Blueprint('api', __name__)
 
 
 @api.route('/cases')
+@cross_origin()  # allow cors policy
 def cases() -> 'jsonify':
     try:
         with DatabaseConnection() as cur:

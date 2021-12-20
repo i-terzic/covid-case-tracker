@@ -4,6 +4,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from flask import Flask, render_template
+from flask_cors import CORS
 from werkzeug.exceptions import InternalServerError, NotFound
 
 from . import error_handler
@@ -16,7 +17,7 @@ from .views import views
 def create_app() -> 'Flask':
     """App factory"""
     app = Flask(__name__)
-
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     load_dotenv()
     env_path = Path('..')/'.env'
 

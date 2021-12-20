@@ -1,13 +1,11 @@
-/*
-    Drop all tables
-*/
+-- Drop all tables
 
 DROP TABLE terzic_case;
 DROP TABLE terzic_test;
 DROP TABLE terzic_person;
-/*
-    Create necessary tables
-*/
+
+-- Create necessary tables
+
 CREATE TABLE terzic_person (
     id INT IDENTITY(1,1) PRIMARY KEY,
     first_name CHAR(64),
@@ -20,8 +18,8 @@ CREATE TABLE terzic_test(
     id INT IDENTITY(1,1) PRIMARY KEY,
     person_id INT FOREIGN KEY REFERENCES terzic_person(id),
     type CHAR(64),
-    result CHAR(64),
-    date date
+    result char(64),
+    date date        
 );
 
 CREATE TABLE terzic_case(
@@ -35,9 +33,8 @@ CREATE TABLE terzic_case(
 );
 
 
-/*
-    Stored Procedures
-*/
+-- Stored Procedures
+
 -- Create a new person, test and case entry
 CREATE PROCEDURE terzic_create_case
     @first_name char(64),
@@ -56,7 +53,7 @@ AS
 BEGIN
     DECLARE @per_id int;
     DECLARE @test_id int;
-    DECLARE @today = CONVERT(date, GETDATE());
+    DECLARE @today date = CONVERT(date, GETDATE());
     SELECT TOP 1 @per_id = id
     FROM terzic_person
     WHERE last_name = @last_name
@@ -101,10 +98,13 @@ BEGIN
             AND date = @test_date
             ORDER BY id desc;
 
-            INSERT INTO terzic_case(person_id, test_id,date, start_date, end_date, status)
-            VALUES (@per_id, @test_id,@today @q_start_date, @q_end_date, @q_status);
+            INSERT INTO terzic_case(person_id, test_id, date, start_date, end_date, status)
+            VALUES (@per_id, @test_id, @today, @q_start_date, @q_end_date, @q_status);
     	END
-END
+END;
+
+-- retrieve open/closed cases
+
 
 -- retrieve open/closed cases
 CREATE PROCEDURE terzic_get_cases
@@ -129,5 +129,47 @@ BEGIN
     INNER JOIN terzic_test t
     ON c.test_id = t.id
     WHERE status = @q_status;
+    RETURN;
+END
+
+-- Extend quarantine end date by one week
+CREATE PROCEDURE terzic_extend_quarantine
+    @case_id int
+AS 
+BEGIN
+	DECLARE @end_date date;
+    
+    SELECT TOP 1 @end_date = end_date 
+    FROM terzic_case
+    WHERE id = @case_id
+    AND end_date IS NOT NULL;
+    
+    IF @end_date IS NOT NULL
+    BEGIN
+      UPDATE terzic_case
+      SET end_date = DATEADD(day, 7, @end_date)
+      WHERE id = @case_id;
+      RETURN;
+    END;
+END;
+
+CREATE PROCEDURE terzic_extend_quarantine
+    @case_id int
+AS 
+BEGIN
+    DECLARE @end_date date;
+    SELECT TOP 1 @end_date = end_date 
+    FROM terzic_case
+    WHERE id = @case_id;
+    RETURN;
+END
+
+CREATE PROCEDURE terzic_close_case
+    @case_id int
+AS
+BEGIN
+    UPDATE terzic_case
+    SET q_status = 'closed'
+    WHERE id = @case_id;
     RETURN;
 END

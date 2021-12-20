@@ -30,11 +30,23 @@ def new_case() -> 'render_template':
 def open_case() -> 'render_template':
     if request.method == 'POST':  # TODO
         if id := request.form.get('close'):
-            print(request.form.get('close'))
-            flash(f'Case: {id} successfully closed!', category='success')
+            try:
+                with DatabaseConnection() as cur:
+                    cur.execute(f"""EXEC terzic_close_case {id};""")
+                    flash(f'Case: {id} successfully closed',
+                          category='success')
+            except Exception as err:
+                flash('Cannot close case - please try again!', category='danger')
+                raise InternalServerError()
         elif id := request.form.get('extend'):
-            print(request.form.get('close'))
-            flash(f'Quarantine of case: {id} extended!', category='warning')
+            try:
+                with DatabaseConnection() as cur:
+                    cur.execute(f"""EXEC terzic_extend_quarantine {id}; """)
+                    flash(
+                        f'Quarantine of case: {id} extended!', category='warning')
+            except Exception as err:
+                flash('Cannot extend quarantine!', category='danger')
+                raise InternalServerError()
         return redirect('open')
     if request.method == 'GET':
         try:

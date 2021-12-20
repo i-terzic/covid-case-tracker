@@ -3,7 +3,12 @@
 {% block content %}
 <h1>Open Cases</h1>
 
+{% if not cases %}
+<br><br>
+<h4>There are no open cases!</h4>
+{% endif %}
 <div class="accordion" id="case-accordion">
+
   {% for case in cases %}
   <div class="accordion-item">
     <h2 class="accordion-header" id={{'headignCase' ~ case.case_id}}>

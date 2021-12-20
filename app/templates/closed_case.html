@@ -17,11 +17,6 @@
         {% else %}
         {{case.last_name.strip() +", " + case.first_name.strip() + ", End Date: " ~ case.q_end_date}}
         {% endif %}
-        <!-- {% if case.test_result != ' negativ' %}
-        {{case.last_name + ", " + case.first_name + ", " + case.test_result }}
-        {% else %}
-        {{case.last_name + ", " + case.first_name + ", End Date: " ~ case.q_end_date }}
-        {% endif %} -->
       </button>
     </h2>
     <div id={{'collapseCase' ~ case.case_id}} class="accordion-collapse collapse"

@@ -28,54 +28,13 @@ CREATE TABLE terzic_case(
     id INT IDENTITY(1,1) PRIMARY KEY,
     person_id INT FOREIGN KEY REFERENCES terzic_person(id),
     test_id INT FOREIGN KEY REFERENCES terzic_test(id),
+    date date,
     start_date date,
     end_date date,
     status char(64)
 );
 
-/*
-    Create dummy data
-*/
 
-
-INSERT INTO terzic_person(
-	first_name,
-  	last_name,
-  	birth_date,
- 	address
-) VALUES (
-    'Dummy',
-    'LastName',
-    '01/01/1965',
-    'Dummstreet 1'
-);
-
-
-INSERT INTO terzic_test(
-    person_id,
-    type,
-    result,
-    date
-) VALUES (
-    1,
-    'Covid-19',
-    'negativ',
-    '12/18/2021'
-);
-
-INSERT INTO terzic_case( 
-    person_id,
-    test_id,
-    start_date,
-    end_date,
-    status 
-) VALUES(
-    1,
-    1,
-    NULL,
-    NULL,
-    'closed'
-);
 /*
     Stored Procedures
 */
@@ -97,7 +56,7 @@ AS
 BEGIN
     DECLARE @per_id int;
     DECLARE @test_id int;
-
+    DECLARE @today = CONVERT(date, GETDATE());
     SELECT TOP 1 @per_id = id
     FROM terzic_person
     WHERE last_name = @last_name
@@ -125,9 +84,9 @@ BEGIN
         AND result = @test_result
         AND date = @test_date
         ORDER BY id desc;
-
-        INSERT INTO terzic_case(person_id, test_id, start_date, end_date, status)
-        VALUES (@per_id, @test_id, @q_start_date, @q_end_date, @q_status);
+        
+        INSERT INTO terzic_case(person_id, test_id,date, start_date, end_date, status)
+        VALUES (@per_id, @test_id, @today, @q_start_date, @q_end_date, @q_status);
     END
     ELSE 
     	BEGIN
@@ -142,7 +101,33 @@ BEGIN
             AND date = @test_date
             ORDER BY id desc;
 
-            INSERT INTO terzic_case(person_id, test_id, start_date, end_date, status)
-            VALUES (@per_id, @test_id, @q_start_date, @q_end_date, @q_status);
+            INSERT INTO terzic_case(person_id, test_id,date, start_date, end_date, status)
+            VALUES (@per_id, @test_id,@today @q_start_date, @q_end_date, @q_status);
     	END
+END
+
+-- retrieve open/closed cases
+CREATE PROCEDURE terzic_get_cases
+    @q_status char(64)
+AS
+BEGIN
+    SELECT  c.id as case_id,
+            c.start_date as q_start_date, 
+            c.end_date as q_end_date, 
+            c.status, 
+            c.date as case_date,
+            t.type as test_type,
+            t.result as test_result,
+            t.date as test_date,
+            p.last_name,
+            p.first_name,
+            p.birth_date,
+            p.address
+    FROM terzic_case c
+    INNER JOIN terzic_person p
+    ON c.person_id = p.id
+    INNER JOIN terzic_test t
+    ON c.test_id = t.id
+    WHERE status = @q_status;
+    RETURN;
 END

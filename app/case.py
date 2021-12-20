@@ -1,54 +1,24 @@
-import re
 
 from flask import Blueprint, flash, redirect, render_template, request
-from flask.helpers import url_for
-from flask.typing import StatusCode
 from werkzeug.exceptions import InternalServerError
 
 from .database import DatabaseConnection
+from .utils import FormHandler
 
 case = Blueprint('case', __name__)
 
 
-# @first_name char(64),
-# @last_name char(64),
-# @birth_date date,
-# @address char(64),
-
-# @test_type char(64),
-# @test_result char(64),
-# @test_date date,
-
-# @q_start_date date,
-# @q_end_date date,
-# @q_status char(64)
-
 @case.route('/new', methods=['GET', 'POST'])
 def new_case() -> 'render_template':
     """render the new case template"""
-    if request.method == 'POST':  # TODO
+    if request.method == 'POST':
         try:
             with DatabaseConnection() as cur:
-                first_name = request.form.get('first-name')
-                last_name = request.form.get('last-name')
-                birth_date = request.form.get('birth-date')
-                address = request.form.get('address')
-
-                test_type = request.form.get('test-type')
-                test_result = request.form.get('test-result')
-                test_date = request.form.get('test-date')
-
-                q_start_date = request.form.get('quarantine-start-date') if test_result != 'negativ' else 'NULL'
-                q_end_date = request.form.get('quarantine-end-date') if test_result != 'negativ' else 'NULL'
-                q_status = 'closed' if q_start_date is None else 'open'
-                _SQL = f""" EXEC terzic_create_case 
-                            @first_name={first_name}, 
-                            @last_name={last_name},
-                            @
-                                                    """
-                cur.execute()
-            flash('Successfully submited new Case', category='success')
+                _SQL = FormHandler.create_new_case_query(dict(request.form))
+                cur.execute(_SQL)
+                flash('Successfully submited new Case', category='success')
         except Exception as err:
+            print(err)
             flash('Please try again', category='danger')
             raise InternalServerError()
         return render_template('new_case.html', title='New Case')
@@ -56,15 +26,22 @@ def new_case() -> 'render_template':
         return render_template('new_case.html', title='New Case')
 
 
-@case.route('/open')
+@case.route('/open', methods=['GET', 'POST'])
 def open_case() -> 'render_template':
     if request.method == 'POST':  # TODO
-        pass
+        if id := request.form.get('close'):
+            print(request.form.get('close'))
+            flash(f'Case: {id} successfully closed!', category='success')
+        elif id := request.form.get('extend'):
+            print(request.form.get('close'))
+            flash(f'Quarantine of case: {id} extended!', category='warning')
+        return redirect('open')
     if request.method == 'GET':
         try:
             with DatabaseConnection() as cur:
                 cur.execute(
-                    "SELECT * FROM terzic_case WHERE status = 'open';")
+                    """EXEC terzic_get_cases 'open';"""
+                )
                 data = []
                 for line in cur:
                     case = dict(line)
@@ -82,7 +59,7 @@ def closed_case() -> 'render_template':
         try:
             with DatabaseConnection() as cur:
                 cur.execute(
-                    "SELECT * FROM terzic_case WHERE status = 'closed';"
+                    """EXEC terzic_get_cases 'closed';"""
                 )
                 data = []
                 for line in cur:

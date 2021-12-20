@@ -3,9 +3,67 @@
 {% block content %}
 <h1>Open Cases</h1>
 
-<ul class="list-group list-group-flush">
+<div class="accordion" id="case-accordion">
   {% for case in cases %}
-  <li class="list-group-item">{{case}}</li>
-  {% endfor %}
-</ul>
-{% endblock content %}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id={{'headignCase' ~ case.case_id}}>
+      <button class="accordion-button" type="button" data-bs-toggle="collapse"
+        data-bs-target={{'#collapseCase' ~ case.case_id}} aria-expanded="true"
+        aria-controls={{'collapseCase' ~ case.case_id}}>
+        {{case.last_name +", " + case.first_name +", " ~   case.q_start_date +", " ~   case.q_end_date}}
+      </button>
+    </h2>
+    <div id={{'collapseCase' ~ case.case_id}} class="accordion-collapse collapse"
+      aria-labelledby={{'headignCase' ~ case.case_id}} data-bs-parent="#case-accordion">
+      <div class="accordion-body">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+              <div class="card-header">
+                {{case.last_name + ", " + case.first_name}}
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{"Birth Date: " ~ case.birth_date}}</li>
+                <li class="list-group-item">{{"Address; " ~ case.address}}</li>
+
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+              <div class="card-header">Case</div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{"Quarantine since: " ~ case.q_start_date}}</li>
+                <li class="list-group-item">{{"Quarantine to: " ~ case.q_end_date}}</li>
+                <li class="list-group-item">{{"Test date: " ~ case.test_date}}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+              <div class="card-header">Operations</div>
+              <ul class="list-group list-group-flush">
+                <form method="POST">
+                  <li class="list-group-item">
+                    <button style="width: 100%;" type="submit" name="extend" value={{case.case_id}}
+                      class="btn btn-outline-warning">Extend
+                      Quarantine</button>
+                  </li>
+                  <li class="list-group-item">
+                    <button style="width: 100%; " type="submit" name="close" value={{case.case_id}}
+                      class="btn btn-outline-success">Close
+                      case
+                    </button>
+                  </li>
+                </form>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% endblock content %}

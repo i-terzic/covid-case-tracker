@@ -7,6 +7,7 @@ from flask import Flask, render_template
 from werkzeug.exceptions import InternalServerError, NotFound
 
 from . import error_handler
+from .api import api
 from .case import case
 from .people import people
 from .views import views
@@ -28,5 +29,6 @@ def create_app() -> 'Flask':
     app.register_blueprint(views)
     app.register_blueprint(case, url_prefix='/case')
     app.register_blueprint(people, url_prefix='/people')
+    app.register_blueprint(api, url_prefix='/api')
 
     return app

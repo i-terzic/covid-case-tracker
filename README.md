@@ -22,6 +22,20 @@ source venv/bin/activate
 python3 -m pip install -r requirements.txt
 ```
 
+Im Anschluss muss ggf. unter venv/lib/flask_script die Zeile
+
+```
+from flask._compat import text_type
+
+```
+
+mit
+
+```
+from flask_script._compat import text_type
+```
+
+ausgetauscht werden.
 Windows:
 
 ```
@@ -33,6 +47,9 @@ python3 -m pip install -r requirements.txt
 ```
 
 um eine virtual environment zu erstellen und alle requrements zu installieren.
+
+Im Anschluss muss eine `.env`-Datei erstellt werden.
+Die relevanten Felder sind in der `.sample.env`-Datei aufgeführt.
 
 ## Data Model
 

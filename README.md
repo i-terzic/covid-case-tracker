@@ -26,7 +26,6 @@ Im Anschluss muss ggf. unter ```venv/lib/flask_script/__init__.py``` die Zeile
 
 ```
 from flask._compat import text_type
-
 ```
 
 mit

@@ -7,19 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css"> -->
   {% block css %}
   {% endblock css %}
 
-  <title>
-    {% if title %}
-    {{title}}
-    {% else %}
-    {% block title %}
-
-    {% endblock title %}
-    {% endif %}
-  </title>
+  <title>{% block title %}{% endblock title %}</title>
 </head>
 
 <body>

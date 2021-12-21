@@ -1,4 +1,4 @@
-# Covid-Case Tracker App with remote DB connection
+# Covid-Case Tracker App mit remote DB connection
 
 ## Installation
 
@@ -8,7 +8,7 @@
 
 - [ ] Git
 
-- [ ] Internet connection (for API access and CDN access)
+- [ ] Internet Zugang (für API und CDN Zugang)
 
 - [ ] VPN Connection zum HS VPN (andernfalls funktioniert die App nicht richtig, da keine Daten zur verfügung stehen)
 

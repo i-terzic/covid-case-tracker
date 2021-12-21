@@ -1,7 +1,7 @@
 import pprint
 
 from app import database as db
-from app.form_handler import FormHandler
+from app.database import FormHandler
 
 if __name__ == '__main__':
     with db.DatabaseConnection() as cur:

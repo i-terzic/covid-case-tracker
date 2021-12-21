@@ -10,9 +10,9 @@
 
 - [ ] Internet connection (for API access and CDN access)
 
-- [ ] VPN Connection to HS VPN (otherwise the application doesn't work properly)
+- [ ] VPN Connection zum HS VPN (andernfalls funktioniert die App nicht richtig, da keine Daten zur verfügung stehen)
 
-On Linux/Mac run:
+Linux/Mac:
 
 ```
 python3 -m venv venv
@@ -22,7 +22,7 @@ source venv/bin/activate
 python3 -m pip install -r requirements.txt
 ```
 
-On Windows run:
+Windows:
 
 ```
 python3 -m venv venv
@@ -32,7 +32,7 @@ venv\Scripts\activate.bat
 python3 -m pip install -r requirements.txt
 ```
 
-to create a virtual environment and install all requirements.
+um eine virtual environment zu erstellen und alle requrements zu installieren.
 
 ## Data Model
 
@@ -54,3 +54,23 @@ to create a virtual environment and install all requirements.
   - FK: test.id (int)
   - Quarantäne-Start (date)
   - Quarantäne-Ende (date)
+  - Status (char(64))
+
+## Funktionsweise
+
+- Views:
+  - Home:
+    - Zeigt einen Graphen mit der Anzahl an Fällen in den letzten 7 Tagen an
+  - People:
+    - Zeigt alle getesteten Personen an mit allen relevanten Informationen
+  - New Case:
+    - Hier können neue Covid-19 Fälle bzw. Test erstellt werden.
+    - Die Logik berücksichtigt auch ob das resultat Positiv oder Negativ war und fordert dementsprechend ein Start- und Enddatum für die Qarantäne
+    - Ein Fall entspricht einem Test
+    - Fällt der Test negativ aus ist der Fall direkt geschlossen und unter Cases > Closed Cases zu finden
+    - Fällt der Test positiv aus ist der Fall offen und kann unter Cases > Open Cases geschlossen werden, oder die Quarantäne kann um 1 Woche verlängert werden
+  - Open cases
+    - Zeigt alle offenen Cases an
+    - die Quarantäne kann um 1 Woche verlängert werden, oder der Fall wird geschlossen
+  - Closed cases:
+    - Zeigt alle geschlossenen Cases an, auch die Historie falls eine Person mehrere Cases hatte

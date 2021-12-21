@@ -22,11 +22,34 @@
     <div id={{'collapseCase' ~ case.case_id}} class="accordion-collapse collapse"
       aria-labelledby={{'headignCase' ~ case.case_id}} data-bs-parent="#case-accordion">
       <div class="accordion-body">
-        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds
-        the appropriate classes that we use to style each element. These classes control the overall appearance, as well
-        as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our
-        default variables. It's also worth noting that just about any HTML can go within the
-        <code>.accordion-body</code>, though the transition does limit overflow.
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="card" style="width: 18rem;">
+              <div class="card-header">
+                {{case.last_name + ", " + case.first_name}}
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{"Birth Date: " ~ case.birth_date}}</li>
+                <li class="list-group-item">{{"Address: " ~ case.address}}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="card" style="width: 18rem;">
+              <div class="card-header">Case</div>
+              <ul class="list-group list-group-flush">
+                {% if case.q_start_date %}
+                <li class="list-group-item">{{"Quarantine since: " ~ case.q_start_date}}</li>
+                <li class="list-group-item">{{"Quarantine to: " ~ case.q_end_date}}</li>
+                <li class="list-group-item">{{"Test date: " ~ case.test_date}}</li>
+                {% else %}
+                <li class="list-group-item">Negative Test</li>
+                <li class="list-group-item">{{"Test date: " ~ case.test_date }}</li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

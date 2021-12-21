@@ -1,8 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <h1>People</h1>
-{% for person in people %}
-<p>{{person}}</p>
-{% endfor %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Birth Date</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for person in people %}
+    <tr>
+      <th scope="row">{{person.id}}</th>
+      <td>{{person.first_name}}</td>
+      <td>{{person.last_name}}</td>
+      <td>{{person.birth_date}}</td>
+      <td>{{person.address}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endblock content %}

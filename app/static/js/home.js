@@ -1,3 +1,5 @@
+"use strict";
+
 window.addEventListener("load", async () => {
   const ctx = document.getElementById("myChart").getContext("2d");
 

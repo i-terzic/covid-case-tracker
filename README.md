@@ -22,7 +22,7 @@ source venv/bin/activate
 python3 -m pip install -r requirements.txt
 ```
 
-Im Anschluss muss ggf. unter venv/lib/flask_script/\__init__.py die Zeile
+Im Anschluss muss ggf. unter ```__venv/lib/flask_script/__init__.py``` die Zeile
 
 ```
 from flask._compat import text_type

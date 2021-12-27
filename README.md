@@ -34,7 +34,7 @@ mit
 from flask_script._compat import text_type
 ```
 
-ausgetauscht werden.\
+ausgetauscht werden.
 
 #### Windows (command prompt):
 

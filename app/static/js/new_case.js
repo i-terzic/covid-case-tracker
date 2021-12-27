@@ -1,5 +1,5 @@
 "use strict";
-//Disable Quaranteen Date input if test result is negativew
+//Disable Quaranteen Date input if test result is negative
 window.addEventListener("load", () => {
   const testResult = document.querySelector("#test-result");
   testResult.addEventListener("change", (event) => {

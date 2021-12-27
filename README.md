@@ -71,7 +71,7 @@ Die Applikation kann mittels
 python3 manage.py runserver -d
 ```
 
-ausgeführt werden und läuft unter.
+ausgeführt werden und läuft unter:
 
 ```
 http://localhost:5000

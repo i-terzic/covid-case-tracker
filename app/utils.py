@@ -4,18 +4,18 @@ class FormHandler():
     """Utility class to create SQL querys"""
     @staticmethod
     def create_new_case_query(data: dict):
-        first_name = FormHandler.quote(data.get('first-name'))
-        last_name = FormHandler.quote(data.get('last-name'))
-        birth_date = FormHandler.create_date(data.get('birth-date'))
-        address = FormHandler.quote(data.get('address'))
+        first_name = FormHandler.quote(str(data.get('first-name')))
+        last_name = FormHandler.quote(str(data.get('last-name')))
+        birth_date = FormHandler.create_date(str(data.get('birth-date')))
+        address = FormHandler.quote(str(data.get('address')))
 
         test_type = FormHandler.quote('Covid-19')
-        test_result = FormHandler.quote(data.get('test-result'))
-        test_date = FormHandler.create_date(data.get('test-date'))
+        test_result = FormHandler.quote(str(data.get('test-result')))
+        test_date = FormHandler.create_date(str(data.get('test-date')))
         q_start_date = FormHandler.create_date(
-            data.get('quarantine-start-date')) if test_result != '\'negativ\'' else 'NULL'
+            str(data.get('quarantine-start-date')))if test_result != '\'negativ\'' else 'NULL'
         q_end_date = FormHandler.create_date(
-            data.get('quarantine-end-date')) if test_result != '\'negativ\'' else 'NULL'
+            str(data.get('quarantine-end-date'))) if test_result != '\'negativ\'' else 'NULL'
         q_status = FormHandler.quote(
             'closed') if q_start_date == 'NULL' else FormHandler.quote('open')
         _SQL = f"""EXEC terzic_create_case

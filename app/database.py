@@ -36,12 +36,3 @@ class DatabaseConnection():
         self.conn.commit()
         self.cur.close()
         self.conn.close()
-
-
-async def get_data(query: str) -> dict:
-    with DatabaseConnection() as cur:
-        cur.execuete(query)
-        data = []
-        for line in cur:
-            data.append(dict(line))
-        return data

@@ -12,7 +12,7 @@
 
 - [ ] VPN Connection zum HS VPN (andernfalls funktioniert die App nicht richtig, da keine Daten zur verfügung stehen)
 
-Linux/Mac:
+###Linux/Mac:
 
 ```
 python3 -m venv venv
@@ -35,7 +35,8 @@ from flask_script._compat import text_type
 ```
 
 ausgetauscht werden.\
-Windows (command prompt):
+
+###Windows (command prompt):
 
 ```
 python3 -m venv venv

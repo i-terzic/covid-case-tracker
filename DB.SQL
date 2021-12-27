@@ -7,7 +7,7 @@ DROP TABLE terzic_person;
 -- Create necessary tables
 
 CREATE TABLE terzic_person (
-    id INT UNIQUE IDENTITY(1,1) PRIMARY KEY,
+    id INT UNIQUE NOT NULL IDENTITY(1,1) PRIMARY KEY,
     first_name CHAR(64),
     last_name CHAR(64),
     birth_date date,
@@ -15,7 +15,7 @@ CREATE TABLE terzic_person (
 );
 
 CREATE TABLE terzic_test(
-    id INT UNIQUE IDENTITY(1,1) PRIMARY KEY,
+    id INT UNIQUE NOT NULL IDENTITY(1,1) PRIMARY KEY,
     person_id INT FOREIGN KEY REFERENCES terzic_person(id),
     type CHAR(64),
     result char(64),
@@ -23,7 +23,7 @@ CREATE TABLE terzic_test(
 );
 
 CREATE TABLE terzic_case(
-    id INT UNIQUE IDENTITY(1,1) PRIMARY KEY,
+    id INT UNIQUE NOT NULL IDENTITY(1,1) PRIMARY KEY,
     person_id INT FOREIGN KEY REFERENCES terzic_person(id),
     test_id INT FOREIGN KEY REFERENCES terzic_test(id),
     date date,

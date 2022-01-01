@@ -4,6 +4,7 @@ class FormHandler():
     """Utility class to create SQL querys"""
     @staticmethod
     def create_new_case_query(data: dict):
+        """set parameters of new case"""
         first_name = FormHandler.quote(str(data.get('first-name')))
         last_name = FormHandler.quote(str(data.get('last-name')))
         birth_date = FormHandler.create_date(str(data.get('birth-date')))

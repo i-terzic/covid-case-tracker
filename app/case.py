@@ -28,7 +28,7 @@ def new_case() -> 'render_template':
 
 @case.route('/open', methods=['GET', 'POST'])
 def open_case() -> 'render_template':
-    if request.method == 'POST':  # TODO
+    if request.method == 'POST':
         if id := request.form.get('close'):
             try:
                 with DatabaseConnection() as cur:
@@ -65,7 +65,7 @@ def open_case() -> 'render_template':
 
 @case.route('/closed')
 def closed_case() -> 'render_template':
-    if request.method == 'POST':  # TODO
+    if request.method == 'POST':
         pass
     if request.method == 'GET':
         try:

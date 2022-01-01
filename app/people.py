@@ -1,6 +1,4 @@
-from os import curdir
-
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, redirect, render_template, request
 from werkzeug.exceptions import InternalServerError
 
 from .database import DatabaseConnection

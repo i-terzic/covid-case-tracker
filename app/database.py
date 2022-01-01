@@ -1,5 +1,4 @@
 import os
-from logging import error
 from pathlib import Path
 
 import pymssql

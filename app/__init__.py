@@ -1,9 +1,8 @@
-import json
 import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from flask import Flask, render_template
+from flask import Flask
 from flask_cors import CORS
 from werkzeug.exceptions import InternalServerError, NotFound
 
@@ -23,10 +22,11 @@ def create_app() -> 'Flask':
 
     load_dotenv(dotenv_path=env_path)
     app.secret_key = os.getenv('SECRET_KEY')
-
+    # add exception handling
     app.register_error_handler(NotFound, error_handler.page_not_found)
     app.register_error_handler(
         InternalServerError, error_handler.internal_server_error)
+    # register templates
     app.register_blueprint(views)
     app.register_blueprint(case, url_prefix='/case')
     app.register_blueprint(people, url_prefix='/people')

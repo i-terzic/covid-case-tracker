@@ -1,3 +1,4 @@
+"""People related endpoints"""
 from flask import Blueprint, redirect, render_template, request
 from werkzeug.exceptions import InternalServerError
 
@@ -6,8 +7,9 @@ from .database import DatabaseConnection
 people = Blueprint('people', __name__)
 
 
-@people.route('/all')
-def all() -> 'render_template':
+@people.route(rule='/all', methods=['GET'])
+def people_all() -> 'render_template':
+    """Render people.html template"""
     if request.method == 'POST':
         return redirect('500.html'), 500
     if request.method == 'GET':
@@ -18,5 +20,5 @@ def all() -> 'render_template':
                 for line in cur:
                     data.append(dict(line))
         except Exception as err:
-            raise InternalServerError()
+            raise InternalServerError() from err
     return render_template('people.html', title='Person', people=data)

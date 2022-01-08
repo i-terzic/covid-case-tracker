@@ -1,3 +1,4 @@
+"""Utility file"""
 
 
 class FormHandler():
@@ -19,7 +20,7 @@ class FormHandler():
             str(data.get('quarantine-end-date'))) if test_result != '\'negativ\'' else 'NULL'
         q_status = FormHandler.quote(
             'closed') if q_start_date == 'NULL' else FormHandler.quote('open')
-        _SQL = f"""EXEC terzic_create_case
+        _sql = f"""EXEC terzic_create_case
                 @first_name={first_name},
                 @last_name={last_name},
                 @birth_date={birth_date},
@@ -33,7 +34,7 @@ class FormHandler():
                 @q_end_date={q_end_date},
                 @q_status={q_status};
                 """
-        return _SQL
+        return _sql
 
     @staticmethod
     def create_date(date: str) -> str:
@@ -47,6 +48,6 @@ class FormHandler():
         return '/'.join([date[0:4], date[5:7], date[8:]])
 
     @staticmethod
-    def quote(input: str) -> str:
+    def quote(statement: str) -> str:
         """surround the input with quotes for sql statement creation"""
-        return str('\''+input+'\'')
+        return str('\''+statement+'\'')

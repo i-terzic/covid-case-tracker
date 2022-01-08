@@ -1,3 +1,4 @@
+"""Database utility connection"""
 import os
 from pathlib import Path
 
@@ -19,18 +20,24 @@ class DatabaseConnection():
         self.DB_HOST = os.getenv('DB_HOST')
         self.DB_USER = os.getenv('DB_USER')
         self.DB_PWRD = os.getenv('DB_PWRD')
+        self.conn = None
+        self.cur = None
 
     def __enter__(self) -> 'pymssql.connection.cursor':
         """return a cursor"""
         try:
             self.conn = pymssql.connect(
-                server=self.DB_HOST, user=self.DB_USER, password=self.DB_PWRD, database=self.DB_NAME, timeout=3)
+                server=self.DB_HOST,
+                user=self.DB_USER,
+                password=self.DB_PWRD,
+                database=self.DB_NAME,
+                timeout=3)
             self.cur = self.conn.cursor(as_dict=True)
             return self.cur
         except RuntimeError as err:
-            raise(err)
+            raise err
 
-    def __exit__(self, type, value, traceback) -> None:
+    def __exit__(self, _type, value, traceback) -> None:
         """commit everything, close cursor and close connection"""
         self.conn.commit()
         self.cur.close()

@@ -24,7 +24,7 @@ python3 -m pip install -r requirements.txt
 
 Im Anschluss muss ggf. unter `venv/lib/flask_script/__init__.py` die Zeile
 
-```shell
+```python
 from flask._compat import text_type
 ```
 

@@ -12,9 +12,9 @@
 
 - [ ] VPN Connection zum HS VPN (andernfalls funktioniert die App nicht richtig, da keine Daten zur verfügung stehen)
 
-#### Linux/Mac:
+#### Linux/Mac
 
-```
+```shell
 python3 -m venv venv
 
 source venv/bin/activate
@@ -24,21 +24,21 @@ python3 -m pip install -r requirements.txt
 
 Im Anschluss muss ggf. unter `venv/lib/flask_script/__init__.py` die Zeile
 
-```
+```shell
 from flask._compat import text_type
 ```
 
 mit
 
-```
+```python
 from flask_script._compat import text_type
 ```
 
 ausgetauscht werden.
 
-#### Windows (command prompt):
+#### Windows (command prompt)
 
-```
+```shell
 python3 -m venv venv
 
 venv\Scripts\activate.bat
@@ -48,13 +48,13 @@ pip install -r requirements.txt
 
 Im Anschluss muss ggf. unter `venv\lib\site-packages\flask_script\__init__.py` die Zeile
 
-```
+```python
 from flask._compat import text_type
 ```
 
 mit
 
-```
+```python
 from flask_script._compat import text_type
 ```
 
@@ -67,13 +67,13 @@ Die relevanten Felder sind in der `.sample.env`-Datei aufgeführt.
 
 Die Applikation kann mittels
 
-```
+```shell
 python3 manage.py runserver -d
 ```
 
 ausgeführt werden und läuft unter:
 
-```
+```shell
 http://localhost:5000
 ```
 
